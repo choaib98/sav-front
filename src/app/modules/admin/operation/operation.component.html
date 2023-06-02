@@ -1,0 +1,65 @@
+
+
+
+<div class="flex flex-col max-w-240 md:min-w-160 max-h-screen -m-6">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <!-- Breadcrumbs -->
+
+            <!-- Title -->
+            <div class="mt-2 items-center">
+
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate ml-15">
+                    Liste d'Opérations SAV
+                </h2>
+            </div>
+        </div>
+    </div>
+   <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <table class="min-w-full text-left text-sm font-light "  >
+            <thead class="border-b font-medium dark:border-neutral-900">
+            <th class="px-6 py-4">Séléctionner</th>
+
+            <th class="px-6 py-4">Nom  Opération</th>
+
+            </thead>
+            <tbody  >
+
+
+            <tr class="border-b dark:border-neutral-900" *ngFor="let operation of operations">
+                <td class="whitespace-nowrap px-6 py-4 font-bold" ><input type="radio" [(ngModel)]="selctedOpertaion" [value]="operation.operationId"/></td>
+
+                <td class="whitespace-nowrap px-6 py-4 font-medium">{{operation.nomOperation}}</td>
+
+            </tr>
+
+
+
+            </tbody>
+        </table>
+        <br> <br>
+        <button
+            class="order-first sm:order-last"
+            mat-flat-button
+            [color]="'primary'"
+            (click)="getOperation(selctedOpertaion)">
+            <span>Séléctionner  Opération</span>
+        </button>
+        <!-- Send -->
+        <button
+
+            class="sm:mx-3"
+            mat-stroked-button
+            [color]="'primary'"
+            matDialogClose
+            >
+            Fermer
+        </button>
+        </div>
+    <!-- Compose form -->
+
+</div>

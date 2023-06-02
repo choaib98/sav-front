@@ -1,0 +1,236 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+
+            <!-- Title -->
+            <div class="mt-2  ">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate ">
+                    Controle des dossiers SAV
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10 bg-white">
+
+
+
+
+
+
+
+            <div class=" items-center mt-4 sm:mt-0 md:mt-4">
+
+                <fuse-card #expandableCard01="fuseCard" class="p-7 border-third-500 border-2 flex flex-col max-w-7xl w-full transform transition-all mt-4 "*ngFor="let client of demandeSav.dossier.clients" >
+
+
+
+                    <div class="relative flex flex-col rounded-2xl    overflow-hidden bg-card  ease-in-out duration-150" >
+                    <div class="flex flex-col flex-auto  p-8 text-center">
+                        <div class="text-3xl font-semibold items-center "    > <span class="text-third-500">Demande SAV N° : </span>{{demandeSav.demandeSavId}}</div>
+
+                        <div class="flex mt-7 text-lg">
+                            <span class="flex  w-1/6 " *ngFor="let client of demandeSav.dossier.clients">
+                                <span class="text-third-500 font-semibold"> Dossier N° : </span>{{demandeSav.dossier.dossierId}}
+
+                              </span>
+                            <span class="flex  w-1/4 " *ngFor="let client of demandeSav.dossier.clients">
+                                <span class="text-third-500 font-semibold" > Nom Client : </span>{{client.nom}} {{client.prenom}}
+
+                             </span>
+                             <span class="flex  w-1/3 " >
+                                 <span class="text-third-500 font-semibold"> Date de demande SAV : </span>{{demandeSav.date}}
+
+                             </span>
+                             <span class="flex  w-1/5 ">
+                                 <span class="text-third-500 font-semibold">  CIN Client :</span> {{demandeSav.dossier.cin}}
+
+                             </span>
+                             <span class="flex  w-1/3 " >
+                                 <span class="text-third-500 font-semibold">  Statut Demande : </span>Demande initiée
+
+                             </span>
+                        </div>
+
+                        <span class="flex  mt-7 text-lg" >
+                            <span class="text-third-500 font-semibold">  Liste des documents à télécharger :</span>
+
+
+                                <button class=" fuse-mat-button-small ml-10" mat-flat-button [color]="'warn'"
+                                (click)="expandableCard01.expanded = !expandableCard01.expanded;toggleVisibility()"
+                                >
+                                 <!-- <span class="mr-1">Details</span> -->
+                                 <mat-icon
+                                     class="icon-size-5 transform transition-transform ease-in-out duration-150 rotate-0"
+
+                                     [svgIcon]="'heroicons_solid:chevron-down'">
+                                 </mat-icon>
+                             </button>
+                             <mat-checkbox
+                             class="mb-2 ml-20"
+                             [(ngModel)]="isConforme"
+
+                             (change)="conforme()"
+                             id="conf"
+
+                             [color]="'warn'">
+                             Conforme
+                         </mat-checkbox>
+                         <mat-checkbox
+                             class="mb-2 ml-10"
+                             [color]="'warn'"
+                             [(ngModel)]="isNotConforme"
+
+                             id="notConf"
+
+                             (change)="isNoConforme();getMotifsByOperation()"
+                             >
+                             Non Conforme
+                         </mat-checkbox>
+
+                         </span>
+                         <fuse-card class="p-7  flex flex-col max-w-3xl w-full transform transition-all mt-4  " *ngIf="isVisible"
+                         #expandableCard02="fuseCard"
+                            >
+                            <ng-container *ngFor="let demandeDoc of demandeSav.demandeDocs">
+                            <div class="flex flex-col flex-auto  p-8  text-lg">
+
+                             <span class="flex   mt-1">
+                                 <span class="text-third-500 font-semibold">  {{demandeDoc.libelle}} : </span> <button  class="ml-10" (click)="downloadPDF(demandeDoc.fileName)"><mat-icon svgIcon="heroicons_outline:printer"></mat-icon></button>
+
+                             </span>
+
+
+
+                         </div>
+                     </ng-container>
+
+                 </fuse-card>
+                    </div>
+
+                </div>
+
+
+                <fuse-card class="p-7 flex flex-col max-w-5xl w-full transform transition-all mt-4 " *ngIf="isConforme"
+                #expandableCard03="fuseCard"
+                   >
+
+                   <div class="flex flex-col p-8 max-w-lg ">
+
+
+                    <button class=" fuse-mat-button-small ml-10 w-60" mat-flat-button [color]="'warn'">Valider Dossier</button>
+
+
+                </div>
+
+
+        </fuse-card>
+
+        <fuse-card class="p-7 flex flex-col max-w-5xl w-full transform transition-all mt-4 " *ngIf="isNotConforme"
+        #expandableCard04="fuseCard"
+           >
+
+
+
+
+            <!-- <mat-label>Motif de non conformité</mat-label>
+        <mat-select>
+            <mat-option value="country-1">Motif 1</mat-option>
+            <mat-option value="country-2">Motif 2</mat-option>
+            <mat-option value="country-3">Motif 3</mat-option>
+        </mat-select> -->
+
+        <div class="flex flex-col p-8 max-w-lg">
+
+            <mat-form-field class="fuse-mat-dense flex-auto">
+                <mat-label>Motif de non Conformité</mat-label>
+                <mat-select class="">
+                    <div *ngFor="let motif of motifs">
+                    <mat-option value="">{{motif.libelle}}</mat-option>
+                </div>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+        <button class=" fuse-mat-button-small ml-10 w-60" mat-flat-button [color]="'warn'">Rejeter Dossier</button>
+
+
+
+
+
+</fuse-card>
+
+
+
+
+                  </fuse-card>
+
+                                <!-- <div class="grid grid-cols-2 gap-4 mt-7">
+                                    <div class="flex ">
+                                        <div class="w-1/2">
+                                            <strong>   Nom client : </strong> Choaib Laaroussi
+                                        </div>
+                                        <div class=" w-1/2">
+                                            <strong>   CIN : </strong> CH52306
+                                        </div>
+
+                                    </div>
+
+                                    <br>
+                                <div class="flex ">
+                                    <div class="">
+                                        <strong>  Date d'envoie de la demande SAV : </strong> 09/05/2023
+                                    </div>
+
+                                   </div></div>
+
+                                   <div class="flex " >
+                                    <div class="">
+                                        <strong>  Date d'envoie de la demande SAV : </strong> 09/05/2023
+                                    </div>
+
+                                   </div>
+                                     -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+<!-- <style>
+    table {
+  width: 70%;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border: 1px solid black;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #000;
+}
+
+</style> -->
+</div>

@@ -1,0 +1,177 @@
+<div class="flex flex-col flex-auto min-w-0 bg-grey-100">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+         
+            <!-- Title -->
+            <div class="mt-2  ">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate ">
+                    Dossiers
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10 bg-white	items-center		">
+       
+        <fuse-alert [type]="'error'" *ngIf="vis">
+            <span fuseAlertTitle>Dossier non trouvé</span>
+            
+        </fuse-alert>
+
+        
+
+
+            
+            <div class=" items-center ml-40 mt-4 sm:mt-0 md:mt-4 ">
+               
+                
+
+                <form class="flex flex-col mt-8 p-8 pb-4   bg-inherit  ml-40 mr-60	max-w-3xl	 bg-card rounded-2xl  overflow-hidden" [formGroup]="searchForm" >
+
+                     <!-- Search -->
+                <div class="flex-auto gt-xs:flex-row bg-inherit">
+                    
+                    <mat-form-field class="fuse-mat-dense bg-inherit fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                        <input
+                            matInput
+                            name="searchByCin"
+                            class="bg-inherit"
+                            formControlName="cin"
+                            [placeholder]="'Chercher Dossier par CIN'"
+                            >
+                    </mat-form-field>
+                </div>
+                <div class="flex gt-xs:flex-row mt-5">
+                    
+                    <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                        <input
+                            matInput
+                            name="searchById"
+                            [autocomplete]="'off'"
+                            formControlName="dossierId"
+
+                            [placeholder]="'Chercher Dossier par Id'"
+                            >
+                    </mat-form-field>
+                </div>
+
+                <div class="flex gt-xs:flex-row mt-5">
+                    
+                    <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                        <mat-icon
+                            class="icon-size-5"
+                            matPrefix
+                            [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                        <input
+                            matInput
+                            name="searchByNomClient"
+                            [autocomplete]="'off'"
+                            formControlName="nomClient"
+                            [placeholder]="'Chercher Dossier par Nom Client'"
+                            >
+                    </mat-form-field>
+                </div>
+                <div class="ml-50">
+                <button
+                    class="ml-4 mt-5 flex-auto w-60"
+                    mat-flat-button
+                    [color]="'primary'"
+                    type="submit"
+                    (click)="onSubmit()"
+                    
+                   >
+                    <mat-icon [svgIcon]="'heroicons_outline:search-circle'"></mat-icon>
+                    <span class="ml-2 mr-1">Chercher</span>
+                </button></div>
+                </form>
+
+
+
+                <!-- Add contact button -->
+                
+            </div>
+            <br>        
+<br>           
+          
+          
+          
+            
+        
+        <table class="min-w-full text-left text-sm font-light " *ngIf="  vis2" >
+            <thead class="border-b font-medium dark:border-neutral-900">
+                <th class="px-6 py-4">DossierId</th>
+                <th class="px-6 py-4">CIN</th>
+                <th class="px-6 py-4">EMAIL</th>
+                <th class="px-6 py-4">MontantDossier</th>
+                <th class="px-6 py-4">CRD</th>
+                <th class="px-6 py-4">Mensualite</th>
+                <th class="px-6 py-4">DateCredit</th>
+                <th class="px-6 py-4">Total_Impaye</th>
+                <th class="px-6 py-4">Duree</th>
+                <th class="px-6 py-4">DureeRestante</th>
+            </thead>
+            <tbody  >
+              
+              
+                <tr class="border-b dark:border-neutral-900" *ngFor="let dossier of results">
+                    <td class="whitespace-nowrap px-6 py-4 font-bold">{{dossier.dossierId}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.cin}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.email}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.montantDossier}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.crd}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.mensualite}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.dateCredit | date}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.total_impaye}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.duree}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{dossier.dureeRestante}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium"><button
+                        class="ml-4"
+                        mat-flat-button
+                        [color]="'primary'"
+                        (click)="openComposeDialog(dossier.dossierId);"
+                       >
+                        
+                        <span class="ml-2 mr-1">Faire opération SAV</span>
+                    </button></td>
+                </tr>
+
+                
+               
+            </tbody>
+        </table>
+   
+    </div>
+
+</div>
+
+<!-- <style>
+    table {
+  width: 70%;
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border: 1px solid black;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #000;
+}
+
+</style> -->

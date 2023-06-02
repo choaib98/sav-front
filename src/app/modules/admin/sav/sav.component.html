@@ -1,0 +1,101 @@
+
+<style>
+    .container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 10vh; /* set height to full viewport height */
+}
+
+.item {
+  width: 50%; /* set width to 50% to create two columns */
+  height: 50vh; /* set height to half of the viewport height */
+  text-align: center;
+}
+
+
+.item1 {
+  width: 50%; /* set width to 50% to create two columns */
+  height: 20vh; /* set height to half of the viewport height */
+}
+
+
+</style>
+
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+           
+            <!-- Breadcrumbs -->
+            <div class="container" >
+                <div class="item">
+                    <button class="button" >SAV<br>Controle financier</button><br>
+                    
+                </div>
+                <div class="item" >
+                    <button class="button" >GAR<br>
+                        Controle et siganture d'actes</button>
+                    
+                </div>
+              
+              </div>
+              
+            <!-- Title -->
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Demande N°111
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <div class="max-w-3xl prose prose-sm">
+
+           
+                <h2 style="text-align: center;">Notaire non renseigné</h2>
+                
+                <div class="container">
+                    <div class="item">
+                        <strong>CIN : </strong>{{cin}} <button  (click)="downloadPDF()" ><mat-icon svgIcon="heroicons_outline:printer"></mat-icon></button> <br>
+                      
+                        <strong>Nom :</strong> {{nom}} <br>
+                        <strong>Nature d'opération : </strong> {{nature}} <br>
+                        <strong>Description : </strong> {{description}} <br>
+                    </div>
+                    <div class="item">
+                        <strong>Titre foncié : </strong> {{titreFoncier}} <br>
+                        <strong>Montant d'hypothèque : </strong> [{{montantHypo}}] <br>
+                        <strong>Mode signature : </strong>{{modeSignature}} <br>
+                    </div>
+                  </div><br>
+                  <div class="container">
+                    <div class="item">
+                        <strong >Acte</strong><button  (click)="downloadPDF()"><mat-icon svgIcon="heroicons_outline:printer"></mat-icon></button>
+                    </div>
+                    <div class="item">
+                        <strong >Certificat de propriété</strong> <button><mat-icon svgIcon="heroicons_outline:printer"></mat-icon></button>
+                    </div>
+            
+
+    </div>
+    <h2>Accuser la signature</h2>
+    <div class="container" style="border:  1px solid black;">
+        <div class="item1">
+            <br>
+            <strong >Accuser la signature de la minute</strong>
+        </div>
+        <div class="item1">
+            <br>
+            <button mat-icon-button style=" border: 2px solid black;background-color: white;
+            color: black;
+            cursor: pointer;">
+                
+                Confirmer <mat-icon svgIcon="heroicons_outline:check"></mat-icon></button>
+        </div>
+    
+
+</div>
